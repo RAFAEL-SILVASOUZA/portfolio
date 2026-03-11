@@ -1,25 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ThemeProvider } from 'next-themes';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import {
-  Brain,
-  Cloud,
-  Database,
-  Shield,
-  Code2,
-  Linkedin,
-  Mail,
-  ChevronRight,
-  Star,
-  Award,
-  BookOpen,
-  Sparkles,
-  GitBranch,
-  CheckCircle
-} from 'lucide-react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Brain, Cloud, Database, Shield, Code2, LinkedinIcon, Mail, ChevronRight, Star, Award, BookOpen, Sparkles, GitBranch, CheckCircle, ExternalLink, GithubIcon, Zap, Users, Rocket, TrendingUp, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import fotoRafael from '../foto.jpeg';
+import fotoRafael from '../foto.png';
 
 const experiences = [
   {
@@ -231,6 +216,89 @@ const certifications = [
   'Modelando Domínios Ricos'
 ];
 
+const projects = [
+  // Featured projects first (will span 2 cols each on lg screens)
+  {
+    title: 'Sistema RAG Enterprise',
+    description: 'Pipeline completo de Retrieval-Augmented Generation para consulta inteligente de documentos corporativos com índice vetorial e LLM.',
+    tech: ['LangChain', 'Pinecone', 'Azure OpenAI', 'FastAPI', 'React'],
+    impact: 'Redução de 70% no tempo de busca por informações',
+    category: 'GenAI',
+    featured: true,
+    github: '#',
+    demo: '#'
+  },
+  {
+    title: 'Plataforma de Agentes Autônomos',
+    description: 'Sistema multi-agente para automação de processos de negócio com LangGraph, orquestração de LLMs e integração com APIs corporativas.',
+    tech: ['LangGraph', 'GPT-4', 'Azure Functions', 'Service Bus', 'TypeScript'],
+    impact: 'Automação de 85% das tarefas repetitivas',
+    category: 'GenAI',
+    featured: true,
+    github: '#',
+    demo: '#'
+  },
+  {
+    title: 'Arquitetura de Microserviços .NET',
+    description: 'Design e implementação de arquitetura distribuída com DDD, CQRS, Event Sourcing para sistema de alta escala.',
+    tech: ['.NET 8', 'Azure AKS', 'RabbitMQ', 'Redis', 'SQL Server'],
+    impact: 'Sistema suporta 1M+ requisições/dia',
+    category: 'Backend',
+    featured: true,
+    github: '#',
+    demo: '#'
+  },
+  // Regular projects
+  {
+    title: 'Observabilidade LLMOps',
+    description: 'Plataforma completa de monitoramento de LLMs com tracing, custos, qualidade de resposta e alertas inteligentes.',
+    tech: ['OpenTelemetry', 'Datadog', 'Grafana', 'Python', 'Azure'],
+    impact: 'Visibilidade 100% sobre chamadas de IA',
+    category: 'GenAI',
+    featured: false,
+    github: '#',
+    demo: '#'
+  },
+  {
+    title: 'API Gateway Inteligente',
+    description: 'Gateway de APIs com rate limiting, caching, autenticação e roteamento dinâmico para arquitetura de microserviços.',
+    tech: ['Azure APIM', 'Redis', 'OAuth2', 'Terraform'],
+    impact: 'Latência reduzida em 40%',
+    category: 'Cloud',
+    featured: false,
+    github: '#',
+    demo: '#'
+  },
+  {
+    title: 'Pipeline CI/CD Multi-Cloud',
+    description: 'Infraestrutura como código com deployment automatizado em múltiplas clouds (Azure, AWS, GCP).',
+    tech: ['Terraform', 'GitHub Actions', 'Azure DevOps', 'Docker'],
+    impact: 'Deploy em 15 minutos (era 4h)',
+    category: 'DevOps',
+    featured: false,
+    github: '#',
+    demo: '#'
+  }
+];
+
+const impactMetrics = [
+  { label: 'Anos de Experiência', value: 12, suffix: '+', icon: TrendingUp },
+  { label: 'Projetos Entregues', value: 50, suffix: '+', icon: Rocket },
+  { label: 'Desenvolvedores Mentorados', value: 30, suffix: '+', icon: Users },
+  { label: 'Empresas Atendidas', value: 15, suffix: '+', icon: Globe },
+  { label: 'Certificações', value: 5, suffix: '', icon: Award },
+  { label: 'Artigos Técnicos', value: 20, suffix: '+', icon: BookOpen }
+];
+
+const techHighlights = [
+  'GenAI &LLLMs',
+  'RAG Systems',
+  'Agentes Autônomos',
+  '.NET Architecture',
+  'Cloud Native',
+  'LLMOps'
+];
+
 function AnimatedBackground() {
   const particles = Array.from({ length: 60 }, (_, i) => ({
     id: i,
@@ -276,29 +344,145 @@ function FloatingCard({ children, className = '' }: { children: React.ReactNode;
   );
 }
 
+function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView) {
+      const duration = 2000;
+      const steps = 60;
+      const increment = value / steps;
+      let current = 0;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= value) {
+          setCount(value);
+          clearInterval(timer);
+        } else {
+          setCount(Math.floor(current));
+        }
+      }, duration / steps);
+      return () => clearInterval(timer);
+    }
+  }, [isInView, value]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+}
+
 function SkillCard({ category, items }: { category: string; items: string[] }) {
+  const [isHovered, setIsHovered] = useState(false);
+  
   return (
-    <FloatingCard className="h-full">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-blue-500/20 rounded-lg">
-          {category === 'IA & GenAI' && <Brain className="w-6 h-6 text-blue-400" />}
-          {category === 'Backend & .NET' && <Code2 className="w-6 h-6 text-blue-400" />}
-          {category === 'Cloud & DevOps' && <Cloud className="w-6 h-6 text-blue-400" />}
-          {category === 'Dados & Mensageria' && <Database className="w-6 h-6 text-blue-400" />}
-          {category === 'Segurança' && <Shield className="w-6 h-6 text-blue-400" />}
-          {category === 'Ferramentas & Metodologias' && <GitBranch className="w-6 h-6 text-blue-400" />}
+    <motion.div
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="h-full"
+    >
+      <FloatingCard className={`h-full transition-all duration-300 ${isHovered ? 'scale-[1.02] border-blue-400/50' : ''}`}>
+        <div className="flex items-center gap-3 mb-4">
+          <motion.div 
+            className="p-2 bg-blue-500/20 rounded-lg"
+            animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {category === 'IA & GenAI' && <Brain className="w-6 h-6 text-blue-400" />}
+            {category === 'Backend & .NET' && <Code2 className="w-6 h-6 text-blue-400" />}
+            {category === 'Cloud & DevOps' && <Cloud className="w-6 h-6 text-blue-400" />}
+            {category === 'Dados & Mensageria' && <Database className="w-6 h-6 text-blue-400" />}
+            {category === 'Segurança' && <Shield className="w-6 h-6 text-blue-400" />}
+            {category === 'Ferramentas & Metodologias' && <GitBranch className="w-6 h-6 text-blue-400" />}
+          </motion.div>
+          <h3 className="text-xl font-bold text-white">{category}</h3>
         </div>
-        <h3 className="text-xl font-bold text-white">{category}</h3>
+        <ul className="space-y-2">
+          {items.map((item, idx) => (
+            <motion.li
+              key={idx}
+              initial={{ opacity: 0, x: -10 }}
+              animate={isHovered ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+              transition={{ delay: idx * 0.05 }}
+              className="flex items-start gap-2 text-gray-300"
+            >
+              <CheckCircle className="w-4 h-4 mt-1 text-blue-400 flex-shrink-0" />
+              <span className="text-sm">{item}</span>
+            </motion.li>
+          ))}
+        </ul>
+      </FloatingCard>
+    </motion.div>
+  );
+}
+
+function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className={`group relative flex flex-col ${project.featured ? 'md:col-span-2' : ''}`}
+    >
+      <div className="flex flex-col h-full glass-dark rounded-2xl p-6 border border-blue-500/20 hover:border-blue-400/50 transition-all duration-500 overflow-hidden">
+        {/* Gradient overlay on hover */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        />
+        
+        {/* Category badge */}
+        <div className="flex items-center gap-2 mb-4">
+          <span className="px-3 py-1 text-xs font-medium bg-blue-500/20 text-blue-300 rounded-full">
+            {project.category}
+          </span>
+          {project.featured && (
+            <span className="px-3 py-1 text-xs font-medium bg-yellow-500/20 text-yellow-300 rounded-full flex items-center gap-1">
+              <Star className="w-3 h-3" /> Destaque
+            </span>
+          )}
+        </div>
+        
+        {/* Title & Description */}
+        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
+          {project.title}
+        </h3>
+        <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+          {project.description}
+        </p>
+        
+        {/* Tech stack */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.tech.map((tech) => (
+            <span key={tech} className="px-2 py-1 text-xs bg-white/5 text-gray-300 rounded">
+              {tech}
+            </span>
+          ))}
+        </div>
+        
+        {/* Impact */}
+        <div className="flex items-center gap-2 mb-4 text-green-400">
+          <Zap className="w-4 h-4" />
+          <span className="text-sm font-medium">{project.impact}</span>
+        </div>
+        
+        {/* Links */}
+        <motion.div
+          className="flex gap-3"
+          initial={{ opacity: 0 }}
+          animate={isHovered ? { opacity: 1 } : { opacity: 0.7 }}
+        >            <Button size="sm" variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10">
+              <GithubIcon className="w-4 h-4 mr-2" /> Código
+            </Button>
+          <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+            <ExternalLink className="w-4 h-4 mr-2" /> Demo
+          </Button>
+        </motion.div>
       </div>
-      <ul className="space-y-2">
-        {items.map((item, idx) => (
-          <li key={idx} className="flex items-start gap-2 text-gray-300">
-            <CheckCircle className="w-4 h-4 mt-1 text-blue-400 flex-shrink-0" />
-            <span className="text-sm">{item}</span>
-          </li>
-        ))}
-      </ul>
-    </FloatingCard>
+    </motion.div>
   );
 }
 
@@ -359,28 +543,51 @@ function App() {
               </div>
             </div>
             
-            <div className="text-center md:text-left">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-blue-500"
-              >
-                Arquiteto de Soluções
-                <br />
-                <span className="text-3xl md:text-4xl text-blue-300">e Software</span>
-              </motion.h1>
-              
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-lg md:text-xl text-gray-300 mb-8 text-balance max-w-2xl"
-              >
-                Especialista em Inteligência Artificial Generativa, LLMOps, RAG e 
-                Arquiteturas de Agentes com sólida experiência em arquitetura de software 
-                escalável, governança e automação.
-              </motion.p>
+            <div className="text-center md:text-left">        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl md:text-6xl font-bold mb-4"
+        >
+          <span className="text-white">Rafael Silva</span>
+          <br />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-blue-400 to-purple-400">
+            Arquiteto de Soluções
+          </span>
+        </motion.h1>
+        
+        {/* Animated tech highlights */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex flex-wrap gap-2 mb-6"
+        >
+          {techHighlights.map((tech, idx) => (
+            <motion.span
+              key={tech}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 + idx * 0.1 }}
+              className="px-3 py-1 text-sm font-medium bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30"
+            >
+              {tech}
+            </motion.span>
+          ))}
+        </motion.div>
+        
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-lg md:text-xl text-gray-300 mb-8 text-balance max-w-2xl"
+        >
+          <span className="text-blue-400 font-semibold">+12 anos</span> transformando negócios através de arquiteturas escaláveis, 
+          IA Generativa e inovação tecnológica. Especialista em{' '}
+          <span className="text-white font-medium">RAG</span>,{' '}
+          <span className="text-white font-medium">Agentes Autônomos</span> e{' '}
+          <span className="text-white font-medium">Cloud Native</span>.
+        </motion.p>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -398,17 +605,43 @@ function App() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="border-blue-500 text-blue-400 hover:bg-blue-500/10"
-                  >
-                    <Linkedin className="mr-2 h-5 w-5" />
-                    LinkedIn
-                  </a>
-                </Button>
+                  >              <LinkedinIcon className="mr-2 h-5 w-5" /> LinkedIn
+            </a>
+          </Button>
               </motion.div>
             </div>
           </motion.div>
         </header>
 
-        {/* Skills Section */}
+        {/* Impact Metrics Section */}
+      <section className="relative z-10 px-6 py-16 max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
+        >
+          {impactMetrics.map((metric, idx) => (
+            <motion.div
+              key={metric.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass-dark rounded-xl p-4 text-center border border-blue-500/10 hover:border-blue-500/30 transition-colors"
+            >
+              <metric.icon className="w-6 h-6 mx-auto mb-2 text-blue-400" />
+              <div className="text-2xl md:text-3xl font-bold text-white mb-1">
+                <AnimatedCounter value={metric.value} suffix={metric.suffix} />
+              </div>
+              <div className="text-xs text-gray-400">{metric.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* Skills Section */}
         <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -434,7 +667,44 @@ function App() {
           </motion.div>
         </section>
 
-        {/* Experience Section */}
+        {/* Projects Section */}
+      <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full text-blue-300 text-sm mb-6"
+            >
+              <Rocket className="w-4 h-4" />
+              Projetos em Destaque
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Soluções que{' '}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Geram Valor
+              </span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Projetos reais com impacto mensurável em produção, desde arquiteturas de IA até sistemas distribuídos de alta escala.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project, idx) => (
+              <ProjectCard key={project.title} project={project} index={idx} />
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Experience Section */}
         <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -537,11 +807,9 @@ function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="border-blue-500 text-blue-400 hover:bg-blue-500/10"
-                    >
-                      <Linkedin className="mr-2 h-5 w-5" />
-                      Conectar no LinkedIn
-                    </a>
-                  </Button>
+                    >            <LinkedinIcon className="mr-2 h-5 w-5" /> Conectar no LinkedIn
+            </a>
+          </Button>
                 </div>
               </CardContent>
             </Card>
@@ -565,9 +833,8 @@ function App() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 transition-colors"
-              >
-                <Linkedin className="w-6 h-6" />
-              </a>
+              >            <LinkedinIcon className="w-6 h-6" />
+          </a>
               <a 
                 href="mailto:rafael.silva.xp@hotmail.com"
                 className="text-blue-400 hover:text-blue-300 transition-colors"
