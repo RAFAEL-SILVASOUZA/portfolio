@@ -4,13 +4,15 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Brain, Cloud, Database, Shield, Code2, LinkedinIcon, Mail, ChevronRight, Star, Award, BookOpen, Sparkles, GitBranch, CheckCircle, Zap, Users, Rocket, TrendingUp, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import fotoRafael from '../foto.png';
+import fotoRafael from '../foto.jpeg';
+import avatarRafael from '../avatar.png';
 
 const experiences = [
   {
     company: 'V8.TECH',
     role: 'Arquiteto de Soluções',
     period: 'Junho 2025 - Presente',
+    duration: '1 ano 7 meses',
     location: 'São Paulo, Brasil',
     highlights: [
       'Liderança técnica em iniciativas estratégicas',
@@ -22,7 +24,8 @@ const experiences = [
   {
     company: 'V8.TECH',
     role: 'Tech Lead .NET Sênior',
-    period: 'Julho 2024 - Maio 2025',
+    period: 'Julho 2024 - Junho 2025',
+    duration: '1 ano',
     location: 'São Paulo, Brasil',
     highlights: [
       'Liderança técnica de squads',
@@ -34,7 +37,8 @@ const experiences = [
   {
     company: 'Vertem',
     role: 'Tech Lead | .NET',
-    period: 'Novembro 2023 - Junho 2024',
+    period: 'Novembro 2023 - Agosto 2024',
+    duration: '10 meses',
     location: 'São Paulo, Brasil',
     highlights: [
       'Trabalho com .NET Core (DDD/Solid)',
@@ -49,7 +53,8 @@ const experiences = [
   {
     company: 'Capitani Group',
     role: 'Senior Software Engineer | Specialist | .NET',
-    period: 'Junho 2023 - Outubro 2023',
+    period: 'Junho 2023 - Novembro 2023',
+    duration: '6 meses',
     location: 'São Paulo, Brasil',
     highlights: [
       'Atuação como especialista .NET',
@@ -61,7 +66,8 @@ const experiences = [
   {
     company: 'V8.TECH',
     role: 'Senior Software Engineer .NET',
-    period: 'Março 2023 - Maio 2023',
+    period: 'Março 2023 - Junho 2023',
+    duration: '4 meses',
     location: 'Remoto',
     highlights: [
       'Projeto temporário (POC)',
@@ -74,6 +80,7 @@ const experiences = [
     company: 'Avenue Code',
     role: 'Senior Software Engineer .NET',
     period: 'Dezembro 2021 - Março 2023',
+    duration: '1 ano 4 meses',
     location: 'Remoto',
     highlights: [
       'Projetos internacionais',
@@ -86,6 +93,7 @@ const experiences = [
     company: 'Ambev Tech',
     role: 'Analista Desenvolvedor .NET',
     period: 'Junho 2021 - Novembro 2021',
+    duration: '6 meses',
     location: 'Maringá, Paraná, Brasil',
     highlights: [
       'Desenvolvimento de aplicações empresariais',
@@ -97,6 +105,7 @@ const experiences = [
     company: 'Theòs Sistemas Eclesiais',
     role: 'Backend Developer | Tech Lead',
     period: ' Abril 2019 - Maio 2021',
+    duration: '2 anos 2 meses',
     location: 'Maringá, Brasil',
     highlights: [
       'Liderança técnica de projetos',
@@ -108,6 +117,7 @@ const experiences = [
     company: 'Naymar',
     role: 'Analista Desenvolvedor .NET',
     period: 'Julho 2016 - Março 2019',
+    duration: '2 anos 9 meses',
     location: 'São Paulo, Brasil',
     highlights: [
       'Desenvolvimento de soluções .NET',
@@ -118,6 +128,7 @@ const experiences = [
     company: 'Confitec',
     role: 'Analista Desenvolvedor',
     period: 'Outubro 2015 - Abril 2016',
+    duration: '7 meses',
     location: 'Rio de Janeiro, Brasil',
     highlights: [
       'Desenvolvimento de aplicações empresariais',
@@ -128,6 +139,7 @@ const experiences = [
     company: 'ASSIST - Associação dos Servidores',
     role: 'Analista Desenvolvedor .NET',
     period: 'Agosto 2013 - Setembro 2015',
+    duration: '2 anos 2 meses',
     location: 'Rio de Janeiro, Brasil',
     highlights: [
       'Desenvolvimento de sistemas de gestão',
@@ -138,6 +150,7 @@ const experiences = [
     company: 'ASC Solutions',
     role: 'Programador Delphi / .NET',
     period: 'Dezembro 2012 - Julho 2013',
+    duration: '8 meses',
     location: 'Rio de Janeiro, Brasil',
     highlights: [
       'Desenvolvimento full-stack',
@@ -229,7 +242,6 @@ const certifications = [
 ];
 
 const projects = [
-  // Featured projects first (will span 2 cols each on lg screens)
   {
     title: 'Sistema RAG Enterprise',
     description: 'Pipeline completo de Retrieval-Augmented Generation para consulta inteligente de documentos corporativos com índice vetorial e LLM.',
@@ -260,7 +272,6 @@ const projects = [
     github: '#',
     demo: '#'
   },
-  // Regular projects
   {
     title: 'Observabilidade LLMOps',
     description: 'Plataforma completa de monitoramento de LLMs com tracing, custos, qualidade de resposta e alertas inteligentes.',
@@ -319,7 +330,7 @@ function AnimatedBackground() {
     size: Math.random() * 4 + 1,
     duration: Math.random() * 20 + 10,
     delay: Math.random() * 5,
-    twinkle: Math.random() > 0.6 // 40% das partículas vão brilhar
+    twinkle: Math.random() > 0.6
   }));
 
   return (
@@ -429,20 +440,19 @@ function SkillCard({ category, items }: { category: string; items: string[] }) {
 }
 
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
-  return (      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        className="group relative flex flex-col"
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="group relative flex flex-col"
     >
       <div className="flex flex-col h-full glass-dark rounded-2xl p-6 border border-blue-500/20 hover:border-blue-400/50 transition-all duration-500 overflow-hidden">
-        {/* Gradient overlay on hover */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         />
         
-        {/* Category badge */}
         <div className="flex items-center gap-2 mb-4">
           <span className="px-3 py-1 text-xs font-medium bg-blue-500/20 text-blue-300 rounded-full">
             {project.category}
@@ -454,7 +464,6 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           )}
         </div>
         
-        {/* Title & Description */}
         <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
           {project.title}
         </h3>
@@ -462,7 +471,6 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           {project.description}
         </p>
         
-        {/* Tech stack */}
         <div className="flex flex-wrap gap-2 mb-4">
           {project.tech.map((tech) => (
             <span key={tech} className="px-2 py-1 text-xs bg-white/5 text-gray-300 rounded">
@@ -471,13 +479,10 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           ))}
         </div>
         
-        {/* Impact */}
         <div className="flex items-center gap-2 mb-4 text-green-400">
           <Zap className="w-4 h-4" />
           <span className="text-sm font-medium">{project.impact}</span>
         </div>
-        
-
       </div>
     </motion.div>
   );
@@ -492,6 +497,11 @@ function ExperienceCard({ exp }: { exp: typeof experiences[0] }) {
           <p className="text-blue-400 font-medium">{exp.company}</p>
         </div>
         <div className="text-right">
+          <div className="flex items-center justify-end gap-2 mb-1">
+            <span className="px-2 py-1 text-xs font-medium bg-green-500/20 text-green-300 rounded-full">
+              {exp.duration}
+            </span>
+          </div>
           <p className="text-sm text-gray-400">{exp.period}</p>
           <p className="text-sm text-gray-400">{exp.location}</p>
         </div>
@@ -528,37 +538,53 @@ function App() {
         <header className="relative z-10 px-6 py-20 md:py-32 max-w-7xl mx-auto">
           <motion.div
             style={{ opacity: headerOpacity }}
-            className="flex flex-col md:flex-row items-center md:items-center gap-8 md:gap-12"
+            className="flex flex-col md:flex-row items-center md:items-end gap-8 md:gap-12"
           >
-            <div className="flex-shrink-0">
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl flex items-center justify-center overflow-hidden">
+            {/* Foto do rosto principal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative group"
+            >
+              {/* Efeito de glow atrás da foto */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+              
+              {/* Container da foto com glassmorphism */}
+              <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-2xl overflow-hidden ring-2 ring-blue-500/30 group-hover:ring-blue-400/50 transition-all duration-500 shadow-2xl">
                 <img 
                   src={fotoRafael} 
                   alt="Rafael Silva Souza"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+                {/* Overlay gradient sutil */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
               </div>
-            </div>
+              
+              {/* Indicador de status online */}
+              <div className="absolute bottom-3 right-3 w-4 h-4 bg-green-400 rounded-full ring-2 ring-black/50 animate-pulse" />
+            </motion.div>
             
-            <div className="text-center md:text-left">
+            <div className="max-w-3xl">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 className="flex flex-col md:flex-row items-center md:items-end gap-3 md:gap-4 mb-4"
-              >              <h1 className="text-2xl md:text-3xl font-bold">
-                <span className="text-white">Rafael Silva</span>
-                <span className="ml-2 md:ml-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-blue-400 to-purple-400">
-                  | Arquiteto de Soluções
-                </span>
-              </h1>
+              >
+                <h1 className="text-2xl md:text-3xl font-bold">
+                  <span className="text-white">Rafael Silva</span>
+                  <span className="ml-2 md:ml-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-blue-400 to-purple-400">
+                    | Arquiteto de Soluções
+                  </span>
+                </h1>
               </motion.div>
               
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-lg md:text-xl text-gray-300 mb-2 text-balance max-w-2xl"
+                className="text-lg md:text-xl text-gray-300 mb-6 text-balance"
               >
                 <span className="text-blue-400 font-semibold">+12 anos</span> transformando negócios através de arquiteturas escaláveis, 
                 IA Generativa e inovação tecnológica. 
@@ -569,7 +595,7 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="flex flex-wrap gap-2 mb-4 justify-center md:justify-start"
+                className="flex flex-wrap gap-2 mb-6"
               >
                 {techHighlights.map((tech, idx) => (
                   <motion.span
@@ -588,7 +614,7 @@ function App() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="flex flex-wrap gap-2 justify-center md:justify-start"
+                className="flex flex-wrap gap-2"
               >
                 <Button size="sm" className="bg-blue-600 hover:bg-blue-700 px-3 py-1 h-8" aria-label="Enviar e-mail para rafael.silva.xp@hotmail.com">
                   <Mail className="mr-1.5 h-3 w-3" />
@@ -619,35 +645,61 @@ function App() {
           </motion.div>
         </header>
 
-        {/* Impact Metrics Section */}
-      <section className="relative z-10 px-6 py-16 max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
-        >
-          {impactMetrics.map((metric, idx) => (
+        {/* Avatar & Metrics Section - Layout em duas colunas */}
+        <section className="relative z-10 px-6 py-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            
+            {/* Coluna esquerda - 6 cards em grid 3x2 */}
+            <div className="space-y-8">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              >
+                {impactMetrics.map((metric, idx) => (
+                  <motion.div
+                    key={metric.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="glass-dark rounded-xl p-4 text-center border border-blue-500/10 hover:border-blue-500/30 transition-colors"
+                  >
+                    <metric.icon className="w-6 h-6 mx-auto mb-2 text-blue-400" />
+                    <div className="text-2xl md:text-3xl font-bold text-white mb-1">
+                      <AnimatedCounter value={metric.value} suffix={metric.suffix} />
+                    </div>
+                    <div className="text-xs text-gray-400">{metric.label}</div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+            
+            {/* Coluna direita - Avatar maior */}
             <motion.div
-              key={metric.label}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="glass-dark rounded-xl p-4 text-center border border-blue-500/10 hover:border-blue-500/30 transition-colors"
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex items-center justify-center lg:justify-end"
             >
-              <metric.icon className="w-6 h-6 mx-auto mb-2 text-blue-400" />
-              <div className="text-2xl md:text-3xl font-bold text-white mb-1">
-                <AnimatedCounter value={metric.value} suffix={metric.suffix} />
+              <div className="relative">
+                {/* Avatar boneco - maior e com fundo transparente */}
+                <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-transparent">
+                  <img 
+                    src={avatarRafael} 
+                    alt="Avatar de Rafael"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </div>
-              <div className="text-xs text-gray-400">{metric.label}</div>
             </motion.div>
-          ))}
-        </motion.div>
-      </section>
+          </div>
+        </section>
 
-      {/* Skills Section */}
+        {/* Skills Section */}
         <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -674,43 +726,43 @@ function App() {
         </section>
 
         {/* Projects Section */}
-      <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full text-blue-300 text-sm mb-6"
-            >
-              <Rocket className="w-4 h-4" />
-              Projetos em Destaque
-            </motion.div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Soluções que{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-                Geram Valor
-              </span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Projetos reais com impacto mensurável em produção, desde arquiteturas de IA até sistemas distribuídos de alta escala.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, idx) => (
-              <ProjectCard key={project.title} project={project} index={idx} />
-            ))}
-          </div>
-        </motion.div>
-      </section>
+        <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="text-center mb-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full text-blue-300 text-sm mb-6"
+              >
+                <Rocket className="w-4 h-4" />
+                Projetos em Destaque
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Soluções que{' '}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                  Geram Valor
+                </span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Projetos reais com impacto mensurável em produção, desde arquiteturas de IA até sistemas distribuídos de alta escala.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((project, idx) => (
+                <ProjectCard key={project.title} project={project} index={idx} />
+              ))}
+            </div>
+          </motion.div>
+        </section>
 
-      {/* Experience Section */}
+        {/* Experience Section */}
         <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -813,9 +865,10 @@ function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="border-blue-500 text-blue-400 hover:bg-blue-500/10"
-                    >            <LinkedinIcon className="mr-2 h-5 w-5" /> Conectar no LinkedIn
-            </a>
-          </Button>
+                    >
+                      <LinkedinIcon className="mr-2 h-5 w-5" /> Conectar no LinkedIn
+                    </a>
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -839,8 +892,9 @@ function App() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 transition-colors"
-              >            <LinkedinIcon className="w-6 h-6" />
-          </a>
+              >
+                <LinkedinIcon className="w-6 h-6" />
+              </a>
               <a 
                 href="mailto:rafael.silva.xp@hotmail.com"
                 className="text-blue-400 hover:text-blue-300 transition-colors"
