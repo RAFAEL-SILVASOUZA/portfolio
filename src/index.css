@@ -101,6 +101,11 @@
   75% { transform: translateY(-20px) translateX(10px); }
 }
 
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
 .particle {
   position: absolute;
   background: linear-gradient(135deg, #60a5fa, #3b82f6);
@@ -108,6 +113,10 @@
   opacity: 0.3;
   animation: float-particle 8s ease-in-out infinite;
   will-change: transform;
+}
+
+.particle.twinkle {
+  animation: float-particle 8s ease-in-out infinite, twinkle 3s ease-in-out infinite;
 }
 
 /* Scroll behavior */

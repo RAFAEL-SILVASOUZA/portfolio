@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Brain, Cloud, Database, Shield, Code2, LinkedinIcon, Mail, ChevronRight, Star, Award, BookOpen, Sparkles, GitBranch, CheckCircle, ExternalLink, GithubIcon, Zap, Users, Rocket, TrendingUp, Globe } from 'lucide-react';
+import { Brain, Cloud, Database, Shield, Code2, LinkedinIcon, Mail, ChevronRight, Star, Award, BookOpen, Sparkles, GitBranch, CheckCircle, Zap, Users, Rocket, TrendingUp, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import fotoRafael from '../foto.png';
@@ -22,7 +22,7 @@ const experiences = [
   {
     company: 'V8.TECH',
     role: 'Tech Lead .NET Sênior',
-    period: 'Julho 2024 - Junho 2025',
+    period: 'Julho 2024 - Maio 2025',
     location: 'São Paulo, Brasil',
     highlights: [
       'Liderança técnica de squads',
@@ -34,7 +34,7 @@ const experiences = [
   {
     company: 'Vertem',
     role: 'Tech Lead | .NET',
-    period: 'Novembro 2023 - Agosto 2024',
+    period: 'Novembro 2023 - Junho 2024',
     location: 'São Paulo, Brasil',
     highlights: [
       'Trabalho com .NET Core (DDD/Solid)',
@@ -49,13 +49,25 @@ const experiences = [
   {
     company: 'Capitani Group',
     role: 'Senior Software Engineer | Specialist | .NET',
-    period: 'Junho 2023 - Novembro 2023',
+    period: 'Junho 2023 - Outubro 2023',
     location: 'São Paulo, Brasil',
     highlights: [
       'Atuação como especialista .NET',
       'Desenvolvimento de soluções empresariais',
       'Arquitetura de sistemas complexos',
       'Integração com múltiplas plataformas'
+    ]
+  },
+  {
+    company: 'V8.TECH',
+    role: 'Senior Software Engineer .NET',
+    period: 'Março 2023 - Maio 2023',
+    location: 'Remoto',
+    highlights: [
+      'Projeto temporário (POC)',
+      'Experiência com Oracle Cloud',
+      'Desenvolvimento de soluções empresariais',
+      'Arquitetura de sistemas complexos'
     ]
   },
   {
@@ -306,7 +318,8 @@ function AnimatedBackground() {
     top: `${Math.random() * 100}%`,
     size: Math.random() * 4 + 1,
     duration: Math.random() * 20 + 10,
-    delay: Math.random() * 5
+    delay: Math.random() * 5,
+    twinkle: Math.random() > 0.6 // 40% das partículas vão brilhar
   }));
 
   return (
@@ -315,7 +328,7 @@ function AnimatedBackground() {
       {particles.map(p => (
         <div
           key={p.id}
-          className="particle"
+          className={`particle ${p.twinkle ? 'twinkle' : ''}`}
           style={{
             left: p.left,
             top: p.top,
@@ -416,17 +429,12 @@ function SkillCard({ category, items }: { category: string; items: string[] }) {
 }
 
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      className={`group relative flex flex-col ${project.featured ? 'md:col-span-2' : ''}`}
+  return (      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        className="group relative flex flex-col"
     >
       <div className="flex flex-col h-full glass-dark rounded-2xl p-6 border border-blue-500/20 hover:border-blue-400/50 transition-all duration-500 overflow-hidden">
         {/* Gradient overlay on hover */}
@@ -469,18 +477,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           <span className="text-sm font-medium">{project.impact}</span>
         </div>
         
-        {/* Links */}
-        <motion.div
-          className="flex gap-3"
-          initial={{ opacity: 0 }}
-          animate={isHovered ? { opacity: 1 } : { opacity: 0.7 }}
-        >            <Button size="sm" variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10">
-              <GithubIcon className="w-4 h-4 mr-2" /> Código
-            </Button>
-          <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-            <ExternalLink className="w-4 h-4 mr-2" /> Demo
-          </Button>
-        </motion.div>
+
       </div>
     </motion.div>
   );
@@ -531,10 +528,10 @@ function App() {
         <header className="relative z-10 px-6 py-20 md:py-32 max-w-7xl mx-auto">
           <motion.div
             style={{ opacity: headerOpacity }}
-            className="flex flex-col md:flex-row items-center gap-12"
+            className="flex flex-col md:flex-row items-center md:items-center gap-8 md:gap-12"
           >
             <div className="flex-shrink-0">
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl glass-dark flex items-center justify-center overflow-hidden">
+              <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl flex items-center justify-center overflow-hidden">
                 <img 
                   src={fotoRafael} 
                   alt="Rafael Silva Souza"
@@ -543,71 +540,80 @@ function App() {
               </div>
             </div>
             
-            <div className="text-center md:text-left">        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-6xl font-bold mb-4"
-        >
-          <span className="text-white">Rafael Silva</span>
-          <br />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-blue-400 to-purple-400">
-            Arquiteto de Soluções
-          </span>
-        </motion.h1>
-        
-        {/* Animated tech highlights */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-wrap gap-2 mb-6"
-        >
-          {techHighlights.map((tech, idx) => (
-            <motion.span
-              key={tech}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + idx * 0.1 }}
-              className="px-3 py-1 text-sm font-medium bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30"
-            >
-              {tech}
-            </motion.span>
-          ))}
-        </motion.div>
-        
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg md:text-xl text-gray-300 mb-8 text-balance max-w-2xl"
-        >
-          <span className="text-blue-400 font-semibold">+12 anos</span> transformando negócios através de arquiteturas escaláveis, 
-          IA Generativa e inovação tecnológica. Especialista em{' '}
-          <span className="text-white font-medium">RAG</span>,{' '}
-          <span className="text-white font-medium">Agentes Autônomos</span> e{' '}
-          <span className="text-white font-medium">Cloud Native</span>.
-        </motion.p>
+            <div className="text-center md:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="flex flex-col md:flex-row items-center md:items-end gap-3 md:gap-4 mb-4"
+              >              <h1 className="text-2xl md:text-3xl font-bold">
+                <span className="text-white">Rafael Silva</span>
+                <span className="ml-2 md:ml-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-blue-400 to-purple-400">
+                  | Arquiteto de Soluções
+                </span>
+              </h1>
+              </motion.div>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-lg md:text-xl text-gray-300 mb-2 text-balance max-w-2xl"
+              >
+                <span className="text-blue-400 font-semibold">+12 anos</span> transformando negócios através de arquiteturas escaláveis, 
+                IA Generativa e inovação tecnológica. 
+              </motion.p>
+              
+              {/* Animated tech highlights */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="flex flex-wrap gap-2 mb-4 justify-center md:justify-start"
+              >
+                {techHighlights.map((tech, idx) => (
+                  <motion.span
+                    key={tech}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 + idx * 0.05 }}
+                    className="px-3 py-1 text-sm font-medium bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30"
+                  >
+                    {tech}
+                  </motion.span>
+                ))}
+              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="flex flex-wrap gap-3 justify-center md:justify-start"
+                className="flex flex-wrap gap-2 justify-center md:justify-start"
               >
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                  <Mail className="mr-2 h-5 w-5" />
+                <Button size="sm" className="bg-blue-600 hover:bg-blue-700 px-3 py-1 h-8" aria-label="Enviar e-mail para rafael.silva.xp@hotmail.com">
+                  <Mail className="mr-1.5 h-3 w-3" />
                   rafael.silva.xp@hotmail.com
                 </Button>
-                <Button size="lg" variant="outline" asChild>
+                <Button size="sm" variant="outline" className="px-3 py-1 h-8 border-blue-500 text-blue-400 hover:bg-blue-500/10" asChild aria-label="Abrar perfil do LinkedIn em nova aba">
                   <a 
                     href="https://www.linkedin.com/in/rafael-silva-souza" 
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="border-blue-500 text-blue-400 hover:bg-blue-500/10"
-                  >              <LinkedinIcon className="mr-2 h-5 w-5" /> LinkedIn
-            </a>
-          </Button>
+                  >
+                    <LinkedinIcon className="mr-1.5 h-3 w-3" /> LinkedIn
+                  </a>
+                </Button>
+                <Button size="sm" variant="outline" className="px-3 py-1 h-8 border-blue-500 text-blue-400 hover:bg-blue-500/10" asChild aria-label="Baixar currículo em formato PDF">
+                  <a 
+                    href="/curriculo.pdf" 
+                    download="Rafael_Silva_Souza_Curriculo.pdf"
+                  >
+                    <svg className="mr-1.5 h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Baixar CV
+                  </a>
+                </Button>
               </motion.div>
             </div>
           </motion.div>
@@ -659,7 +665,7 @@ function App() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {Object.entries(skills).map(([category, items]) => (
                 <SkillCard key={category} category={category} items={items} />
               ))}
