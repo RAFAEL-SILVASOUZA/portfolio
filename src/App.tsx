@@ -15,8 +15,8 @@ const experiences = [
     company: 'V8.TECH',
     role: 'Arquiteto de Soluções',
     period: 'Junho 2025 - Presente',
-    duration: '1 ano 7 meses',
-    location: 'São Paulo, Brasil',
+    duration: '8 meses',
+    location: 'Remoto',
     highlights: [
       'Liderança técnica em iniciativas estratégicas',
       'Definição de arquiteturas e padrões',
@@ -29,7 +29,7 @@ const experiences = [
     role: 'Tech Lead .NET Sênior',
     period: 'Julho 2024 - Junho 2025',
     duration: '1 ano',
-    location: 'São Paulo, Brasil',
+    location: 'Remoto',
     highlights: [
       'Liderança técnica de squads',
       'Arquitetura de soluções escaláveis',
@@ -42,7 +42,7 @@ const experiences = [
     role: 'Tech Lead | .NET',
     period: 'Novembro 2023 - Agosto 2024',
     duration: '10 meses',
-    location: 'São Paulo, Brasil',
+    location: 'Remoto',
     highlights: [
       'Trabalho com .NET Core (DDD/Solid)',
       'REST APIs e RESTful',
@@ -58,7 +58,7 @@ const experiences = [
     role: 'Senior Software Engineer | Specialist | .NET',
     period: 'Junho 2023 - Novembro 2023',
     duration: '6 meses',
-    location: 'São Paulo, Brasil',
+    location: 'Remoto',
     highlights: [
       'Atuação como especialista .NET',
       'Desenvolvimento de soluções empresariais',
@@ -97,7 +97,7 @@ const experiences = [
     role: 'Analista Desenvolvedor .NET',
     period: 'Junho 2021 - Novembro 2021',
     duration: '6 meses',
-    location: 'Maringá, Paraná, Brasil',
+    location: 'Remoto',
     highlights: [
       'Desenvolvimento de aplicações empresariais',
       'Integração de sistemas complexos',
@@ -121,7 +121,7 @@ const experiences = [
     role: 'Analista Desenvolvedor .NET',
     period: 'Julho 2016 - Março 2019',
     duration: '2 anos 9 meses',
-    location: 'São Paulo, Brasil',
+    location: 'Rio de Janeiro, Brasil',
     highlights: [
       'Desenvolvimento de soluções .NET',
       'Manutenção e evolução de sistemas'
