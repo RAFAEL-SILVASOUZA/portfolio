@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Brain, Code2, Cloud, Database, Shield, GitBranch, CheckCircle } from 'lucide-react';
 
@@ -130,7 +130,7 @@ const SkillsSection: React.FC = () => {
         
         
       >
-        <div className="h-full w-full glass-dark rounded-2xl p-6 shadow-2xl border border-blue-500/20 backdrop-blur-xl flex flex-col">
+        <div className="h-full w-full bg-white/10 backdrop-blur-xl border border-white/20 hover:border-white/30 rounded-2xl p-6 shadow-lg transition-all duration-300 flex flex-col">
           
             <div className="flex items-center gap-4 mb-4">
               <motion.div 
@@ -163,9 +163,9 @@ const SkillsSection: React.FC = () => {
   };
 
   return (
-    <section ref={ref} className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+    <section ref={ref} className="relative z-10 px-6 py-6 max-w-7xl mx-auto">
       <motion.div
-        className="text-center mb-16"
+        className="text-center mb-10"
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.8 }}
@@ -179,7 +179,7 @@ const SkillsSection: React.FC = () => {
           Competências <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">Técnicas</span>
         </motion.h2>
         <motion.p 
-          className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -189,7 +189,7 @@ const SkillsSection: React.FC = () => {
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12 items-stretch"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch"
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}

@@ -13,7 +13,7 @@ const FloatingCard: React.FC<FloatingCardProps> = ({ children, className = '' })
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className={`glass-dark rounded-2xl p-6 shadow-lg backdrop-blur-xl ${className}`}
+      className={`bg-white/10 backdrop-blur-xl border border-white/20 hover:border-white/30 rounded-2xl p-6 shadow-xl shadow-black/20 transition-all duration-300 ${className}`}
     >
       {children}
     </motion.div>

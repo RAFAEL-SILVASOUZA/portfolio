@@ -52,17 +52,17 @@ const MetricsSection: React.FC = () => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   return (
-    <section ref={ref} className="relative z-10 px-6 py-12 md:py-16 max-w-7xl mx-auto">
+    <section ref={ref} className="relative z-10 px-6 py-4 md:py-6 max-w-7xl mx-auto">
       <motion.div
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         variants={containerVariants}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-start"
       >
         {/* Coluna esquerda - Métricas com animação orbital */}
-        <div className="space-y-6 lg:space-y-8">
+        <div className="space-y-4 lg:space-y-6">
           <motion.div
-            className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
+            className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4"
             variants={containerVariants}
           >
             {impactMetrics.map((metric, idx) => (
@@ -75,7 +75,7 @@ const MetricsSection: React.FC = () => {
                   rotateY: 5,
                   boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)'
                 }}
-                className="glass-dark rounded-xl p-4 md:p-6 text-center border border-blue-500/10 hover:border-cyan-400/50 transition-all duration-300 cursor-pointer group"
+                className="bg-white/10 backdrop-blur-xl border border-white/20 hover:border-white/30 rounded-2xl p-4 md:p-6 text-center transition-all duration-300 cursor-pointer group"
               >
                 <motion.div 
                   className="w-8 h-8 md:w-10 md:h-10 mx-auto mb-3 group-hover:scale-110 transition-transform"
@@ -125,7 +125,7 @@ const MetricsSection: React.FC = () => {
             />
             
             {/* Avatar principal */}
-            <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-900/20 to-purple-900/20 backdrop-blur-sm border-2 border-cyan-400/30 group-hover:border-cyan-500/50 transition-all duration-500">
+            <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 group-hover:border-white/30 transition-all duration-500">
               <img 
                 src={avatarRafael} 
                 alt="Avatar de Rafael Silva Souza"

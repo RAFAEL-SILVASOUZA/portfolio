@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Linkedin, Mail } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import fotoRafael from '../../assets/foto.jpeg';
 
@@ -41,10 +41,10 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <header className="relative z-10 px-6 py-20 md:py-32 max-w-7xl mx-auto">
+    <header className="relative z-10 px-6 py-12 md:py-20 max-w-7xl mx-auto">
       <motion.div
         style={{ opacity: headerOpacity }}
-        className="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-6 lg:gap-12"
+        className="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-4 lg:gap-8"
       >
         {/* Foto com parallax e glow aprimorado */}
         <motion.div
@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center gap-2 mb-6 text-center lg:text-left lg:items-start"
+            className="flex flex-col items-center gap-1 mb-4 text-center lg:text-left lg:items-start"
           >
             <motion.h1 
               className="text-4xl md:text-6xl font-bold text-white drop-shadow-2xl tracking-tight"
@@ -103,7 +103,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-300 mb-6 text-balance leading-relaxed"
+            className="text-lg md:text-xl text-gray-300 mb-4 text-balance leading-relaxed"
           >
             <span className="text-cyan-400 font-semibold">+12 anos</span> transformando negócios através de arquiteturas escaláveis, 
             IA Generativa e inovação tecnológica. 
@@ -114,7 +114,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-wrap gap-2 mb-6"
+            className="flex flex-nowrap gap-2 mb-4 overflow-x-auto pb-1"
           >
             {techHighlights.map((tech, idx) => (
               <motion.span
@@ -123,7 +123,7 @@ const Hero: React.FC = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ delay: 0.4 + idx * 0.05, type: 'spring', stiffness: 300 }}
                 whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(0, 255, 255, 0.3)' }}
-                className="px-4 py-2 text-sm font-medium bg-blue-500/15 text-blue-300 rounded-full border border-cyan-500/30 backdrop-blur-sm"
+                className="px-3 py-1 text-xs font-medium bg-blue-500/15 text-blue-300 rounded-full border border-cyan-500/30 backdrop-blur-sm whitespace-nowrap flex-shrink-0"
               >
                 {tech}
               </motion.span>
@@ -137,24 +137,11 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-wrap gap-3 justify-center lg:justify-start"
           >
-            <motion.div
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 px-6 py-3 shadow-lg shadow-blue-500/25 hover:shadow-xl transition-all duration-300"
-                aria-label="Enviar e-mail para rafael.silva.xp@hotmail.com"
-              >
-                <Mail className="mr-2 h-5 w-5" />
-                Contato
-              </Button>
-            </motion.div>
             <Button 
-              size="lg" 
+              size="sm" 
               variant="outline" 
               asChild
-              className="px-6 py-3 border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400"
+              className="px-4 py-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400"
               aria-label="Abrir perfil do LinkedIn em nova aba"
             >
               <a 
@@ -162,21 +149,21 @@ const Hero: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Linkedin className="mr-2 h-5 w-5" /> LinkedIn
+                <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
               </a>
             </Button>
             <Button 
-              size="lg" 
+              size="sm" 
               variant="outline" 
               asChild
-              className="px-6 py-3 border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400"
+              className="px-4 py-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400"
               aria-label="Baixar currículo em formato PDF"
             >
               <a 
                 href="/curriculo.pdf" 
                 download="Rafael_Silva_Souza_Curriculo.pdf"
               >
-                <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 Currículo

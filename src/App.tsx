@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeProvider } from 'next-themes';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Brain, Cloud, Database, Shield, Code2, LinkedinIcon, Mail, ChevronRight, Star, Award, BookOpen, Sparkles, GitBranch, CheckCircle, Zap, Users, Rocket, TrendingUp, Globe } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { LinkedinIcon, Mail, ChevronRight, Star, Award, BookOpen, Sparkles, Zap, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Hero from './components/sections/Hero';
 import MetricsSection from './components/sections/Metrics';
 import SkillsSection from './components/sections/Skills';
-import avatarRafael from '../avatar.png';
 import FloatingCard from './utils/FloatingCard';
+import FluidBackground from './components/FluidBackground';
 
 const experiences = [
   {
@@ -162,72 +162,6 @@ const experiences = [
   }
 ];
 
-const skills = {
-  'IA & GenAI': [
-    'RAG end-to-end',
-    'LangChain / LangGraph',
-    'Agentes autônomos e multiagentes',
-    'Modelos de Linguagem (LLM)',
-    'Prompt Engineering avançado',
-    'MCP (Model Context Protocol)',
-    'Embeddings e bases vetoriais',
-    'Governança de IA e guardrails',
-    'Observabilidade de LLM'
-  ],
-  'Backend & .NET': [
-    'C# e .NET moderno',
-    '.NET Core / .NET Framework',
-    'Microservices',
-    'APIs REST e RESTful',
-    'Clean Architecture',
-    'DDD (Domain-Driven Design)',
-    'CQRS e Saga Pattern',
-    'Event-Driven Architecture',
-    'Arquitetura Hexagonal'
-  ],
-  'Cloud & DevOps': [
-    'Microsoft Azure',
-    'AWS (Amazon Web Services)',
-    'Google Cloud Platform (GCP)',
-    'Oracle Cloud Infrastructure (OCI)',
-    'AKS (Azure Kubernetes Service)',
-    'Azure Functions / App Services',
-    'CI/CD (Azure DevOps, GitHub Actions)',
-    'Infraestrutura como Código',
-    'Monitoramento (Azure Monitor, Application Insights)'
-  ],
-  'Dados & Mensageria': [
-    'SQL Server',
-    'MongoDB',
-    'Azure Service Bus',
-    'Bases vetoriais (Pinecone, Weaviate)',
-    'Pipelines de ingestão',
-    'Processamento de streams',
-    'Arquitetura orientada a mensagens',
-    'Orquestração e coreografia'
-  ],
-  'Segurança': [
-    'IAM e RBAC',
-    'Segurança de APIs',
-    'Gestão de segredos (Key Vault)',
-    'Compliance (LGPD)',
-    'Autenticação e autorização',
-    'Criptografia de dados',
-    'SecDevOps'
-  ],
-  'Ferramentas & Metodologias': [
-    'Git / GitFlow',
-    'Docker & Containers',
-    'OpenTelemetry',
-    'Scrum / Agile',
-    'Testes automatizados',
-    'Code Reviews',
-    'Pair Programming',
-    'Documentação técnica',
-    'Mentoria de times'
-  ]
-};
-
 const education = [
   {
     institution: 'Formação Autodidata',
@@ -307,103 +241,9 @@ const projects = [
   }
 ];
 
-const impactMetrics = [
-  { label: 'Anos de Experiência', value: 12, suffix: '+', icon: TrendingUp },
-  { label: 'Projetos Entregues', value: 50, suffix: '+', icon: Rocket },
-  { label: 'Desenvolvedores Mentorados', value: 30, suffix: '+', icon: Users },
-  { label: 'Empresas Atendidas', value: 15, suffix: '+', icon: Globe },
-  { label: 'Certificações', value: 5, suffix: '', icon: Award },
-  { label: 'Artigos Técnicos', value: 20, suffix: '+', icon: BookOpen }
-];
-
-const techHighlights = [
-  'GenAI &LLLMs',
-  'RAG Systems',
-  'Agentes Autônomos',
-  '.NET Architecture',
-  'Cloud Native',
-  'LLMOps'
-];
-
-function AnimatedBackground() {
-  const particles = Array.from({ length: 60 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    size: Math.random() * 4 + 1,
-    duration: Math.random() * 20 + 10,
-    delay: Math.random() * 5,
-    twinkle: Math.random() > 0.6
-  }));
-
-  return (
-    <div className="fixed inset-0 animated-gradient overflow-hidden pointer-events-none">
-      <div className="absolute inset-0 bg-black/50" />
-      {particles.map(p => (
-        <div
-          key={p.id}
-          className={`particle ${p.twinkle ? 'twinkle' : ''}`}
-          style={{
-            left: p.left,
-            top: p.top,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            animationDuration: `${p.duration}s`,
-            animationDelay: `${p.delay}s`
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 // FloatingCard movido para utils/FloatingCard.tsx
 
 // AnimatedCounter movido para utils/AnimatedCounter.tsx
-
-function SkillCard({ category, items }: { category: string; items: string[] }) {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  return (
-    <motion.div
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      className="h-full"
-    >
-      <FloatingCard className={`h-full transition-all duration-300 ${isHovered ? 'scale-[1.02] border-blue-400/50' : ''}`}>
-        <div className="flex items-center gap-3 mb-4">
-          <motion.div 
-            className="p-2 bg-blue-500/20 rounded-lg"
-            animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {category === 'IA & GenAI' && <Brain className="w-6 h-6 text-blue-400" />}
-            {category === 'Backend & .NET' && <Code2 className="w-6 h-6 text-blue-400" />}
-            {category === 'Cloud & DevOps' && <Cloud className="w-6 h-6 text-blue-400" />}
-            {category === 'Dados & Mensageria' && <Database className="w-6 h-6 text-blue-400" />}
-            {category === 'Segurança' && <Shield className="w-6 h-6 text-blue-400" />}
-            {category === 'Ferramentas & Metodologias' && <GitBranch className="w-6 h-6 text-blue-400" />}
-          </motion.div>
-          <h3 className="text-xl font-bold text-white">{category}</h3>
-        </div>
-        <ul className="space-y-2">
-          {items.map((item, idx) => (
-            <motion.li
-              key={idx}
-              initial={{ opacity: 0, x: -10 }}
-              animate={isHovered ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.05 }}
-              className="flex items-start gap-2 text-gray-300"
-            >
-              <CheckCircle className="w-4 h-4 mt-1 text-blue-400 flex-shrink-0" />
-              <span className="text-sm">{item}</span>
-            </motion.li>
-          ))}
-        </ul>
-      </FloatingCard>
-    </motion.div>
-  );
-}
 
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
   return (
@@ -414,49 +254,51 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="group relative flex flex-col"
     >
-      <div className="flex flex-col h-full glass-dark rounded-2xl p-6 border border-blue-500/20 hover:border-blue-400/50 transition-all duration-500 overflow-hidden">
+      <Card className="flex flex-col h-full" withGlow>
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         />
         
-        <div className="flex items-center gap-2 mb-4">
-          <span className="px-3 py-1 text-xs font-medium bg-blue-500/20 text-blue-300 rounded-full">
-            {project.category}
-          </span>
-          {project.featured && (
-            <span className="px-3 py-1 text-xs font-medium bg-yellow-500/20 text-yellow-300 rounded-full flex items-center gap-1">
-              <Star className="w-3 h-3" /> Destaque
+        <CardContent className="relative z-10 flex flex-col flex-grow">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="px-3 py-1 text-xs font-medium bg-blue-500/20 text-blue-300 rounded-full">
+              {project.category}
             </span>
-          )}
-        </div>
-        
-        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
-          {project.title}
-        </h3>
-        <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-          {project.description}
-        </p>
-        
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tech.map((tech) => (
-            <span key={tech} className="px-2 py-1 text-xs bg-white/5 text-gray-300 rounded">
-              {tech}
-            </span>
-          ))}
-        </div>
-        
-        <div className="flex items-center gap-2 mb-4 text-green-400">
-          <Zap className="w-4 h-4" />
-          <span className="text-sm font-medium">{project.impact}</span>
-        </div>
-      </div>
+            {project.featured && (
+              <span className="px-3 py-1 text-xs font-medium bg-yellow-500/20 text-yellow-300 rounded-full flex items-center gap-1">
+                <Star className="w-3 h-3" /> Destaque
+              </span>
+            )}
+          </div>
+          
+          <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+            {project.description}
+          </p>
+          
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.tech.map((tech) => (
+              <span key={tech} className="px-2 py-1 text-xs bg-white/5 text-gray-300 rounded">
+                {tech}
+              </span>
+            ))}
+          </div>
+          
+          <div className="flex items-center gap-2 mb-4 text-green-400">
+            <Zap className="w-4 h-4" />
+            <span className="text-sm font-medium">{project.impact}</span>
+          </div>
+        </CardContent>
+      </Card>
     </motion.div>
   );
 }
 
 function ExperienceCard({ exp }: { exp: typeof experiences[0] }) {
   return (
-    <FloatingCard className="border-l-4 border-blue-500">
+    <FloatingCard>
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
         <div>
           <h3 className="text-xl font-bold text-white">{exp.role}</h3>
@@ -486,8 +328,6 @@ function ExperienceCard({ exp }: { exp: typeof experiences[0] }) {
 
 function App() {
   const [mounted, setMounted] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0.9]);
 
   useEffect(() => {
     setMounted(true);
@@ -498,7 +338,7 @@ function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <div className="min-h-screen text-white relative arterer-bg">
-        <AnimatedBackground />
+        <FluidBackground />
         
         <Hero />
 
@@ -507,24 +347,24 @@ function App() {
         <SkillsSection />
 
         {/* Projects Section */}
-        <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+        <section className="relative z-10 px-6 py-6 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full text-blue-300 text-sm mb-6"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full text-blue-300 text-sm mb-4"
               >
                 <Rocket className="w-4 h-4" />
                 Projetos em Destaque
               </motion.div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Soluções que{' '}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
                   Geram Valor
@@ -544,15 +384,15 @@ function App() {
         </section>
 
         {/* Experience Section */}
-        <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+        <section className="relative z-10 px-6 py-6 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <div className="text-center mb-10">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 <span className="text-blue-400">Experiência</span> Profissional
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -569,15 +409,15 @@ function App() {
         </section>
 
         {/* Certifications & Education */}
-        <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+        <section className="relative z-10 px-6 py-6 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <div className="text-center mb-10">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Formação & <span className="text-blue-400">Certificações</span>
               </h2>
             </div>
@@ -618,14 +458,14 @@ function App() {
         </section>
 
         {/* Contact Section */}
-        <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
+        <section className="relative z-10 px-6 py-6 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <Card className="bg-gradient-to-br from-blue-900/40 to-blue-950/40 border-blue-500/30 overflow-hidden">
+            <Card className="bg-white/10 backdrop-blur-xl border-white/20 overflow-hidden" withGlow>
               <CardContent className="p-12 text-center">
                 <Sparkles className="w-16 h-16 text-blue-400 mx-auto mb-6" />
                 <h2 className="text-3xl font-bold mb-6">
@@ -636,10 +476,6 @@ function App() {
                   software, inteligência artificial e inovação tecnológica.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
-                  <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                    <Mail className="mr-2 h-5 w-5" />
-                    Enviar E-mail
-                  </Button>
                   <Button size="lg" variant="outline" asChild>
                     <a 
                       href="https://www.linkedin.com/in/rafael-silva-souza" 

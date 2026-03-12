@@ -67,23 +67,9 @@
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
-  
-  .glass-dark {
-    background: rgba(30, 58, 138, 0.8); /* blue-900 com opacidade */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-  }
-
-  .arterer-card {
-    background: linear-gradient(145deg, #1e3a8a, #1d4ed8); /* tons azuis escuros */
-    border: 1px solid rgba(59, 130, 246, 0.5);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
-  }
 
   .arterer-bg {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe, #bfdbfe); /* fundo azul claro para light, mas adaptado para dark */
+    background: linear-gradient(135deg, #050510 0%, #0a0a1a 50%, #050510 100%); /* fundo mais escuro para melhor contraste */
   }
 
   .text-balance {
@@ -99,7 +85,7 @@
 }
 
 .animated-gradient {
-  background: linear-gradient(-45deg, #1e40af, #1d4ed8, #3b82f6, #60a5fa, #93c5fd); /* gradiente azul mais vibrante */
+  background: linear-gradient(-45deg, #0a0a1a, #1a1a2e, #0f0f23, #1a1a2e, #0a0a1a); /* gradiente escuro mais suave */
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
 }

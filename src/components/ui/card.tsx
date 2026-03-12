@@ -1,18 +1,43 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & { withGlow?: boolean }
+>(({ className, withGlow = false, children, ...props }, ref) => (
   <div
-    ref={ref}
-    className={cn(
-      "rounded-xl border bg-card text-card-foreground shadow-sm glass-dark",
+    ref={ref}      className={cn(
+      "relative rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl text-card-foreground shadow-xl shadow-black/20 transition-all duration-300 overflow-hidden",
       className
     )}
     {...props}
-  />
+  >
+    {withGlow && (
+      <motion.div
+        className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 rounded-3xl blur-md"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+        transition={{ 
+          duration: 0.3,
+          backgroundPosition: {
+            duration: 3,
+            repeat: Infinity,
+            ease: "linear",
+          }
+        }}
+        animate={{
+          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+        }}
+        style={{
+          backgroundSize: "200% 200%",
+        }}
+      />
+    )}
+    <div className="relative z-10">
+      {children}
+    </div>
+  </div>
 ));
 Card.displayName = "Card";
 
