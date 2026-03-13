@@ -128,7 +128,7 @@ const MetricsSection: React.FC = () => {
             <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 group-hover:border-white/30 transition-all duration-500">
               <img 
                 src={avatarRafael} 
-                alt="Avatar de Rafael Silva Souza"
+                alt="Avatar de Rafael Souza"
                 className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
               />
               {/* Overlay com glow */}
@@ -143,7 +143,7 @@ const MetricsSection: React.FC = () => {
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-md rounded-lg p-3 text-center min-w-[200px] shadow-2xl border border-cyan-500/30"
               >
-                <p className="text-xs text-cyan-300 font-medium">Rafael Silva Souza</p>
+                <p className="text-xs text-cyan-300 font-medium">Rafael Souza</p>
                 <p className="text-xs text-gray-400">Arquiteto de Soluções</p>
               </motion.div>
             )}

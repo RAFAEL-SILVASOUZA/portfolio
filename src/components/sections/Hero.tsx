@@ -65,7 +65,7 @@ const Hero: React.FC = () => {
           <div className="relative w-full h-full rounded-full overflow-hidden ring-2 ring-blue-500/30 group-hover:ring-cyan-400/50 transition-all duration-500 shadow-2xl">
             <img 
               src={fotoRafael} 
-              alt="Rafael Silva Souza"
+              alt="Rafael Souza"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 rounded-full"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -91,7 +91,7 @@ const Hero: React.FC = () => {
               className="text-4xl md:text-6xl font-bold text-white drop-shadow-2xl tracking-tight"
               style={{ overflow: 'hidden' }}
             >
-              {animateLetters('Rafael Silva')}
+              {animateLetters('Rafael Souza')}
             </motion.h1>
             <motion.p className="text-xl md:text-3xl font-semibold text-blue-300">
               {animateLetters('Arquiteto de Soluções')}
@@ -145,7 +145,7 @@ const Hero: React.FC = () => {
               aria-label="Abrir perfil do LinkedIn em nova aba"
             >
               <a 
-                href="https://www.linkedin.com/in/rafael-silva-souza" 
+                href="https://www.linkedin.com/in/rafael-souza" 
                 target="_blank"
                 rel="noopener noreferrer"
               >

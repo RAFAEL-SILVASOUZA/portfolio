@@ -478,7 +478,7 @@ function App() {
                 <div className="flex flex-wrap gap-4 justify-center">
                   <Button size="lg" variant="outline" asChild>
                     <a 
-                      href="https://www.linkedin.com/in/rafael-silva-souza" 
+                      href="https://www.linkedin.com/in/rafael-souza" 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="border-blue-500 text-blue-400 hover:bg-blue-500/10"
@@ -497,7 +497,7 @@ function App() {
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-center md:text-left">
               <p className="text-gray-400">
-                © {new Date().getFullYear()} Rafael Silva Souza. Todos os direitos reservados.
+                © {new Date().getFullYear()} Rafael Souza. Todos os direitos reservados.
               </p>
               <p className="text-sm text-gray-500 mt-2">
                 Arquiteto de Soluções | Tech Lead | GenAI & LLMOps
@@ -505,7 +505,7 @@ function App() {
             </div>
             <div className="flex items-center gap-4">
               <a 
-                href="https://www.linkedin.com/in/rafael-silva-souza" 
+                href="https://www.linkedin.com/in/rafael-souza" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 transition-colors"
