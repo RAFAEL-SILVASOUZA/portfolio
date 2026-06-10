@@ -505,7 +505,7 @@ function App() {
             </div>
             <div className="flex items-center gap-4">
               <a 
-                href="https://www.linkedin.com/in/rafael-souza" 
+                href="https://www.linkedin.com/in/rafael-silva-souza/" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 transition-colors"
