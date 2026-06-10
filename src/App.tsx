@@ -478,7 +478,7 @@ function App() {
                 <div className="flex flex-wrap gap-4 justify-center">
                   <Button size="lg" variant="outline" asChild>
                     <a 
-                      href="https://www.linkedin.com/in/rafael-souza" 
+                      href="https://www.linkedin.com/in/rafael-silva-souza/" 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="border-blue-500 text-blue-400 hover:bg-blue-500/10"
